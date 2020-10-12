@@ -9,6 +9,7 @@ export const updateMe = async (req, res) => {
     const user = await User.findByIdAndUpdate(req.user._id, req.body, {
       new: true
     })
+      .select('-password')
       .lean()
       .exec()
 

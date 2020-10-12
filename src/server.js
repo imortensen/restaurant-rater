@@ -4,8 +4,10 @@ import morgan from 'morgan'
 import config from './config'
 import cors from 'cors'
 import { connect } from './utils/db'
-import { signup, signin } from './utils/auth'
+import { signup, signin, protect } from './utils/auth'
 import userRouter from './resources/user/user.router'
+import restaurantRouter from './resources/restaurant/restaurant.router'
+import ratingRouter from './resources/rating/rating.router'
 
 export const app = express()
 
@@ -17,10 +19,12 @@ app.use(json())
 app.use(urlencoded({ extended: true }))
 app.use(morgan('dev'))
 
-console.log('server test')
 app.post('/signup', signup)
 app.post('/signin', signin)
+app.use('/api', protect)
 app.use('/api/user', userRouter)
+app.use('/api/restaurant', restaurantRouter)
+app.use('/api/rating', ratingRouter)
 
 export const start = async () => {
   try {
