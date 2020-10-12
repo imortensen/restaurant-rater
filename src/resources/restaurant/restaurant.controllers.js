@@ -22,3 +22,5 @@ export const createOne = async (req, res) => {
     res.status(400).end()
   }
 }
+
+export const restaurantControllers = { getAll, createOne }
