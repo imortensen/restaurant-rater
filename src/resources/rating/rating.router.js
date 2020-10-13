@@ -1,20 +1,15 @@
 import { Router } from 'express'
-import {
-  getAll,
-  createOne,
-  updateOne,
-  getMyRatings
-} from './rating.controllers'
+import { ratingControllers } from './rating.controllers'
 
 const router = Router()
 
-router.route('/myRatings').get(getMyRatings)
+router.route('/myRatings').get(ratingControllers.getMyRatings)
 
 router
   .route('/')
-  .get(getAll)
-  .post(createOne)
+  .get(ratingControllers.getMany)
+  .post(ratingControllers.createOne)
 
-router.route('/:id').put(updateOne)
+router.route('/:id').put(ratingControllers.updateOne)
 
 export default router

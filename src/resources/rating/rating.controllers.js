@@ -1,6 +1,6 @@
 import { Rating } from './rating.model'
 
-export const getAll = async (req, res) => {
+export const getMany = async (req, res) => {
   try {
     const restaurant = req.query.restaurant
     console.log('restaurant: ' + restaurant)
@@ -81,18 +81,4 @@ export const getMyRatings = async (req, res) => {
 // Would like to export a functions of functions to simplify the controller input,
 // but for some reason it isn't working
 
-// export const ratingControllers = () => ({
-//   getAll,
-//   createOne,
-//   updateOne,
-//   getRatingsforRestaurant,
-//   getMyRatings
-// })
-
-// export const ratingControllers = () => {
-//   getAll: getAll(),
-//   createOne: createOne(),
-//   updateOne: updateOne(),
-//   getRatingsforRestaurant: getRatingsforRestaurant(),
-//   getMyRatings: getMyRatings()
-// }
+export const ratingControllers = { getMany, createOne, updateOne, getMyRatings }
