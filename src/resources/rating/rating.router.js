@@ -10,6 +10,9 @@ router
   .get(ratingControllers.getMany)
   .post(ratingControllers.createOne)
 
-router.route('/:id').put(ratingControllers.updateOne)
+router
+  .route('/:id')
+  .put(ratingControllers.updateOne)
+  .delete(ratingControllers.removeOne)
 
 export default router

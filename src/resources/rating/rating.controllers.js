@@ -78,7 +78,32 @@ export const getMyRatings = async (req, res) => {
   }
 }
 
+// Delete Rating
+export const removeOne = async (req, res) => {
+  try {
+    const removed = await Rating.findOneAndRemove({
+      createdBy: req.user._id,
+      _id: req.params.id
+    })
+
+    if (!removed) {
+      return res.status(400).end()
+    }
+
+    res.status(200).json({ data: removed })
+  } catch (e) {
+    console.error(e)
+    res.status(400).end()
+  }
+}
+
 // Would like to export a functions of functions to simplify the controller input,
 // but for some reason it isn't working
 
-export const ratingControllers = { getMany, createOne, updateOne, getMyRatings }
+export const ratingControllers = {
+  getMany,
+  createOne,
+  updateOne,
+  getMyRatings,
+  removeOne
+}
