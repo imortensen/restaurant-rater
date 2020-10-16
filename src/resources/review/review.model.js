@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-const ratingSchema = new mongoose.Schema(
+const reviewSchema = new mongoose.Schema(
   {
     restaurant: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -27,6 +27,6 @@ const ratingSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-ratingSchema.index({ user: 1, restaurant: 1 }, { unique: true })
+reviewSchema.index({ user: 1, restaurant: 1 }, { unique: true })
 
-export const Rating = mongoose.model('rating', ratingSchema)
+export const Review = mongoose.model('review', reviewSchema)

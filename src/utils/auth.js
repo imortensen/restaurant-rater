@@ -37,20 +37,20 @@ export const signup = async (req, res) => {
 
 // Signin
 export const signin = async (req, res) => {
-  if (!req.body.email || !req.body.password) {
-    return res.status(400).send({ message: 'Email and password required' })
+  if (!req.body.username || !req.body.password) {
+    return res.status(400).send({ message: 'Username and password required' })
   }
   try {
-    const user = await User.findOne({ email: req.body.email })
-      .select('email password')
+    const user = await User.findOne({ username: req.body.username })
+      .select('username password')
       .exec()
 
     if (!user) {
-      return res.status(401).send({ message: 'No such user for email' })
+      return res.status(401).send({ message: 'Username does not exist' })
     }
     const match = await user.checkPassword(req.body.password)
     if (!match) {
-      return res.status(401).send({ message: 'No auth' })
+      return res.status(401).send({ message: 'Invalid username and password' })
     }
 
     const token = newToken(user)

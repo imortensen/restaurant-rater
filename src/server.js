@@ -7,7 +7,7 @@ import { connect } from './utils/db'
 import { signup, signin, protect } from './utils/auth'
 import userRouter from './resources/user/user.router'
 import restaurantRouter from './resources/restaurant/restaurant.router'
-import ratingRouter from './resources/rating/rating.router'
+import reviewRouter from './resources/review/review.router'
 
 export const app = express()
 
@@ -24,7 +24,7 @@ app.post('/signin', signin)
 app.use('/api', protect)
 app.use('/api/user', userRouter)
 app.use('/api/restaurant', restaurantRouter)
-app.use('/api/rating', ratingRouter)
+app.use('/api/review', reviewRouter)
 
 export const start = async () => {
   try {

@@ -68,7 +68,7 @@ describe('Authentication: ', () => {
   })
 
   describe('signin', () => {
-    test('returns a token for the email and password', async () => {
+    test('returns a token for the username and password', async () => {
       expect.assertions(2)
 
       const fields = {
@@ -95,7 +95,7 @@ describe('Authentication: ', () => {
       await signin(req, res)
     })
 
-    test('email and password required', async () => {
+    test('username and password required', async () => {
       expect.assertions(2)
 
       const req = { body: {} }
@@ -112,7 +112,7 @@ describe('Authentication: ', () => {
       await signin(req, res)
     })
 
-    test('no user for email', async () => {
+    test('invalid username', async () => {
       expect.assertions(2)
 
       const fields = {
@@ -123,7 +123,7 @@ describe('Authentication: ', () => {
 
       const badFields = {
         password: 'ajawvv',
-        email: 'yolo88@yes.com'
+        username: 'johnnny'
       }
 
       await User.create(fields)
@@ -152,7 +152,7 @@ describe('Authentication: ', () => {
 
       const badFields = {
         password: 'ajawvV',
-        email: 'yolo@yes.com'
+        username: 'johnny'
       }
 
       await User.create(fields)

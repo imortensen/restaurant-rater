@@ -20,7 +20,7 @@ describe('API Authentication:', () => {
       let response = await request(app).get('/api/restaurant')
       expect(response.statusCode).toBe(401)
 
-      response = await request(app).get('/api/rating')
+      response = await request(app).get('/api/review')
       expect(response.statusCode).toBe(401)
 
       response = await request(app).get('/api/user')
@@ -32,19 +32,19 @@ describe('API Authentication:', () => {
       const id = mongoose.Types.ObjectId()
       const results = await Promise.all([
         request(app)
-          .get('/api/rating')
+          .get('/api/review')
           .set('Authorization', jwt),
         request(app)
-          .get(`/api/rating/myRatings`)
+          .get(`/api/review/myreviews`)
           .set('Authorization', jwt),
         request(app)
-          .post('/api/rating')
+          .post('/api/review')
           .set('Authorization', jwt),
         request(app)
-          .put(`/api/rating/${id}`)
+          .put(`/api/review/${id}`)
           .set('Authorization', jwt),
         request(app)
-          .delete(`/api/rating/${id}`)
+          .delete(`/api/review/${id}`)
           .set('Authorization', jwt)
       ])
 

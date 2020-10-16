@@ -1,12 +1,12 @@
-import router from '../rating.router'
+import router from '../review.router'
 
-describe('Rating router', () => {
+describe('review router', () => {
   test('has crud routes', () => {
     const routes = [
       { path: '/', method: 'get' },
       { path: '/:id', method: 'put' },
       { path: '/', method: 'post' },
-      { path: '/myRatings', method: 'get' }
+      { path: '/myreviews', method: 'get' }
     ]
 
     routes.forEach(route => {

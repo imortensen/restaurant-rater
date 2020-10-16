@@ -1,15 +1,15 @@
-import { Rating } from '../rating.model'
+import { Review } from '../review.model'
 import mongoose from 'mongoose'
 
-describe('Rating model', () => {
+describe('review model', () => {
   describe('schema', () => {
     test('comment', () => {
-      const comment = Rating.schema.obj.comment
+      const comment = Review.schema.obj.comment
       expect(comment).toEqual(String)
     })
 
     test('createdBy', () => {
-      const createdBy = Rating.schema.obj.createdBy
+      const createdBy = Review.schema.obj.createdBy
       expect(createdBy).toEqual({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'user',
@@ -18,7 +18,7 @@ describe('Rating model', () => {
     })
 
     test('restaurant', () => {
-      const restaurant = Rating.schema.obj.restaurant
+      const restaurant = Review.schema.obj.restaurant
       expect(restaurant).toEqual({
         type: mongoose.SchemaTypes.ObjectId,
         ref: 'restaurant',
@@ -27,7 +27,7 @@ describe('Rating model', () => {
     })
 
     test('stars', () => {
-      const stars = Rating.schema.obj.stars
+      const stars = Review.schema.obj.stars
       expect(stars).toEqual({
         type: Number,
         min: 1,
