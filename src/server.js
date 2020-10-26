@@ -14,6 +14,10 @@ export const app = express()
 // X-Powered-By is a header that tells the browser you are using Express
 app.disable('x-powered-by')
 
+if (config.seed) {
+  require('./utils/seed')
+}
+
 app.use(cors())
 app.use(json())
 app.use(urlencoded({ extended: true }))

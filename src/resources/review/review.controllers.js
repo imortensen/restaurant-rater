@@ -3,7 +3,6 @@ import { Review } from './review.model'
 export const getMany = async (req, res) => {
   try {
     const restaurant = req.query.restaurant
-    console.log('restaurant: ' + restaurant)
     let reviews = {}
     if (!restaurant) {
       reviews = await Review.find()
@@ -19,7 +18,7 @@ export const getMany = async (req, res) => {
         .exec()
     }
 
-    res.status(200).json({ data: reviews })
+    res.status(200).json(reviews)
   } catch (e) {
     console.error(e)
     res.status(400).end()
@@ -65,36 +64,26 @@ export const updateOne = async (req, res) => {
 // Get All reviews for Current User
 export const getMyreviews = async (req, res) => {
   try {
-    const reviews = await Review.find({ createdBy: req.user._id })
-      .populate('restaurant', 'name')
-      .populate('createdBy', 'username')
-      .lean()
-      .exec()
+    const restaurant = req.query.restaurant
+    let reviews = {}
+    if (!restaurant) {
+      reviews = await Review.find({ createdBy: req.user._id })
+        .populate('restaurant', 'name')
+        .populate('createdBy', 'username')
+        .lean()
+        .exec()
+    } else {
+      reviews = await Review.find({
+        restaurant: restaurant,
+        createdBy: req.user._id
+      })
+        .populate('restaurant', 'name')
+        .populate('createdBy', 'username')
+        .lean()
+        .exec()
+    }
 
-    res.status(200).json({ data: reviews })
-  } catch (e) {
-    console.error(e)
-    res.status(400).end()
-  }
-}
-
-// Get Count of reviews and Average Star for Restaurants
-export const getRestaurants = async (req, res) => {
-  try {
-    const restaurants = await Review.aggregate([
-      {
-        $group: {
-          _id: { restaurant: '$restaurant' },
-          averageStars: { $avg: '$stars' },
-          count: { $sum: 1 }
-        }
-      }
-    ])
-      .populate('restaurant', 'name')
-      .lean()
-      .exec()
-
-    res.status(200).json({ data: restaurants })
+    res.status(200).json(reviews)
   } catch (e) {
     console.error(e)
     res.status(400).end()

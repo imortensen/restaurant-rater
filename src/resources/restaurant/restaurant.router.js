@@ -8,10 +8,13 @@ import {
 
 const router = Router()
 
-router.route('/:id').get(getOne)
+router.route('/reviews').get(getAllDetailed)
 
-router.get('/reviews', getAllDetailed)
-router.get('/', getAll)
-router.post('/', createOne)
+router
+  .route('/')
+  .get(getAll)
+  .post(createOne)
+
+router.route('/:id').get(getOne)
 
 export default router

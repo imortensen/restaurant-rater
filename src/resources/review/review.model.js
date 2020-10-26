@@ -27,6 +27,6 @@ const reviewSchema = new mongoose.Schema(
   { timestamps: true }
 )
 
-reviewSchema.index({ user: 1, restaurant: 1 }, { unique: true })
+reviewSchema.index({ createdBy: 1, restaurant: 1 }, { unique: true })
 
 export const Review = mongoose.model('review', reviewSchema)
