@@ -8,6 +8,7 @@ import { signup, signin, protect } from './utils/auth'
 import userRouter from './resources/user/user.router'
 import restaurantRouter from './resources/restaurant/restaurant.router'
 import reviewRouter from './resources/review/review.router'
+import mapsRouter from './resources/maps/maps.router'
 
 export const app = express()
 
@@ -29,6 +30,7 @@ app.use('/api', protect)
 app.use('/api/user', userRouter)
 app.use('/api/restaurant', restaurantRouter)
 app.use('/api/review', reviewRouter)
+app.use('/api/find', mapsRouter)
 
 export const start = async () => {
   try {
