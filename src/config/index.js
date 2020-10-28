@@ -8,7 +8,8 @@ const baseConfig = {
   port: 3000,
   secrets: {
     jwt: process.env.JWT_SECRET,
-    jwtExp: '100d'
+    jwtExp: '100d',
+    gmapsKey: process.env.GOOGLE_MAPS_API_KEY
   }
 }
 

@@ -23,13 +23,46 @@ var users = [
 ]
 
 var restaurants = [
-  { name: 'Cafe Rio' },
-  { name: 'Five Guys' },
-  { name: 'Waffle Love' },
-  { name: 'Chipotle' },
-  { name: 'Saigon Sandwich' },
-  { name: 'Fratelli Ristorante' },
-  { name: 'Mandarin Garden' }
+  {
+    name: 'Cafe Rio',
+    vicinity: '9320 Village Shop Dr, Sandy',
+    place_id: 'ChIJJSdO4v2HUocRRZq7qE00h2k'
+  },
+  {
+    name: 'Five Guys',
+    vicinity: '1082 East, Fort Union Blvd, Midvale',
+    place_id: 'ChIJ4efx09SJUocRHYzDu2c9nU0'
+  },
+  {
+    name: 'Waffle Love',
+    vicinity: '1142 Fort Union Blvd, Midvale',
+    place_id: 'ChIJtywYKyuIUocRqDMZ8KRf1aM'
+  },
+  {
+    name: 'Chipotle',
+    vicinity: '6924 S Park Centre Dr, Cottonwood Heights',
+    place_id: 'ChIJrySuroBiUocRlqs_5a6Ilx8'
+  },
+  {
+    name: 'Saigon Sandwich',
+    vicinity: '8528 1300 E, Sandy',
+    place_id: 'ChIJzbEq0KdiUocRr79__g7SzLQ'
+  },
+  {
+    name: 'Fratelli Ristorante',
+    vicinity: '8612 1300 E, Sandy',
+    place_id: 'ChIJf0at_P2HUocROAafSqI6Ov8'
+  },
+  {
+    name: 'Mandarin Garden',
+    vicinity: '8627 Highland Dr, Sandy',
+    place_id: 'ChIJbyKHE8piUocReaKJM_tBM9Q'
+  },
+  {
+    name: 'Café Zupas',
+    vicinity: '9242 Village Shop Dr, Sandy',
+    place_id: 'ChIJVaZm4v2HUocR22Ie6p0r94k'
+  }
 ]
 
 // var cafeRio = { name: 'Cafe Rio' }
