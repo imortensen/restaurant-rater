@@ -6,6 +6,7 @@ const key = config.secrets.gmapsKey
 
 export const getElevation = async (req, res) => {
   try {
+    console.log('key: ' + key)
     client
       .elevation({
         params: {
@@ -28,39 +29,32 @@ export const getElevation = async (req, res) => {
 }
 
 export const getRestaurants = async (req, res) => {
+  const keyword = req.query.keyword
   try {
     client
-      .findPlaceFromText({
+      .placesNearby({
         params: {
-          input: 'Mongolian Grill',
-          inputtype: 'textquery',
-          fields: [
-            'photos',
-            'formatted_address',
-            'name',
-            'opening_hours',
-            'rating'
-          ],
-          locationbias: 'circle:2000@47.6918452,-122.2226413',
+          // fields: [
+          //   'photos',
+          //   'formatted_address',
+          //   'name',
+          //   'opening_hours',
+          //   'rating'
+          // ],
+          keyword: keyword,
+          location: '40.5982188,-111.8479408',
+          radius: 3000,
+          type: 'restaurant',
           key: key
         },
         timeout: 1000
       })
-      // .elevation({
-      //   params: {
-      //     locations: [{ lat: 45, lng: -110 }],
-      //     key: key
-      //   },
-      //   timeout: 1000 // milliseconds
-      // })
       .then(r => {
-        // console.log('Elevation: ' + r.data.results[0].elevation)
-        console.log('test 1')
-        res.json(r.data)
+        let restaurants = r.data.results
+        res.json(restaurants)
       })
       .catch(e => {
-        console.log('test 2')
-        console.log('error: ' + e.response.data)
+        console.log('error: ' + e)
       })
   } catch (e) {
     console.log(e)

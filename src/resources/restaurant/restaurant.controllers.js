@@ -48,6 +48,8 @@ export const getAllDetailed = async (req, res) => {
       let restaurantNew = {
         _id: r._id,
         name: r.name,
+        place_id: r.place_id,
+        vicinity: r.vicinity,
         stars: null,
         reviews: null
       }
@@ -60,6 +62,8 @@ export const getAllDetailed = async (req, res) => {
       let restaurantNew = {
         _id: r._id.restaurant._id,
         name: r._id.restaurant.name,
+        place_id: r._id.restaurant.place_id,
+        vicinity: r._id.restaurant.vicinity,
         stars: r.stars.toFixed(1),
         reviews: r.reviews
       }

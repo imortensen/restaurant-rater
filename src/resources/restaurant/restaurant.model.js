@@ -5,7 +5,12 @@ const restaurantSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true
-  }
+  },
+  place_id: {
+    type: String,
+    unique: true
+  },
+  vicinity: String
 })
 
 export const Restaurant = mongoose.model('restaurant', restaurantSchema)
