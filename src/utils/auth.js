@@ -1,26 +1,58 @@
 import config from '../config'
-import { User } from '../resources/user/user.model'
 import jwt from 'jsonwebtoken'
+import { User } from '../resources/user/user.model'
 
-// New Token
+// export const generateUserToken = (req, res) => {
+//   console.log('generate user token test')
+//   const id = req.body
+//   const accessToken = generateAccessToken(id)
+//   res.render('authenticated.html', {
+//     token: accessToken
+//   })
+// }
+
+// // Generate an Access Token for the given User ID
+// function generateAccessToken(userId) {
+//   // How long will the token be valid for
+//   const expiresIn = config.secrets.jwtExp
+//   // Which service issued the token
+//   const issuer = config.secrets.issuer
+//   // Which service is the token intended for
+//   const audience = config.secrets.audience
+//   // The signing key for signing the token
+//   const secret = config.secrets.jwt
+
+//   const token = jwt.sign({}, secret, {
+//     expiresIn: expiresIn,
+//     audience: audience,
+//     issuer: issuer,
+//     subject: userId.toString()
+//   })
+
+//   return token
+// }
+
+// New Token/Sign Token
 export const newToken = user => {
-  return jwt.sign({ id: user.id }, config.secrets.jwt, {
-    expiresIn: config.secrets.jwtExp
-  })
+  return jwt.sign(
+    {
+      iss: config.secrets.issuer,
+      id: user._id,
+      iat: new Date().getTime(),
+      // exp: config.secrets.jwtExp
+      exp: new Date().setDate(new Date().getDate() + 1)
+    },
+    config.secrets.jwt
+  )
 }
-
-// Verify Token
-export const verifyToken = token =>
-  new Promise((resolve, reject) => {
-    jwt.verify(token, config.secrets.jwt, (err, payload) => {
-      if (err) return reject(err)
-      resolve(payload)
-    })
-  })
 
 // Signup
 export const signup = async (req, res) => {
-  if (!req.body.email || !req.body.password || !req.body.username) {
+  if (
+    !req.body.local.email ||
+    !req.body.local.password ||
+    !req.body.local.username
+  ) {
     return res
       .status(400)
       .send({ message: 'Email, username, and password required' })
@@ -35,58 +67,14 @@ export const signup = async (req, res) => {
   }
 }
 
-// Signin
-export const signin = async (req, res) => {
-  if (!req.body.username || !req.body.password) {
-    return res.status(400).send({ message: 'Username and password required' })
-  }
-  try {
-    const user = await User.findOne({ username: req.body.username })
-      .select('username password')
-      .exec()
-
-    if (!user) {
-      return res.status(401).send({ message: 'Username does not exist' })
-    }
-    const match = await user.checkPassword(req.body.password)
-    if (!match) {
-      return res.status(401).send({ message: 'Invalid username and password' })
-    }
-
-    const token = newToken(user)
-    return res.status(201).send({ token })
-  } catch (e) {
-    console.error(e)
-    res.status(401).end()
-  }
+// Test
+export const secret = async (req, res, next) => {
+  console.log('I managed to get here!')
+  res.json({ secret: 'resource' })
 }
 
-// Protect
-export const protect = async (req, res, next) => {
-  const bearer = req.headers.authorization
-
-  if (!bearer || !bearer.startsWith('Bearer')) {
-    return res.status(401).end()
-  }
-
-  const token = bearer.split('Bearer ')[1].trim()
-  let payload
-  try {
-    payload = await verifyToken(token)
-  } catch (e) {
-    console.log(e)
-    return res.status(401).end()
-  }
-
-  const user = await User.findById(payload.id)
-    .select('-password')
-    .lean()
-    .exec()
-
-  if (!user) {
-    return res.status(401).end()
-  }
-
-  req.user = user
-  next()
+// Signin
+export const signin = async (req, res, next) => {
+  const token = newToken(req.user)
+  res.status(200).json({ token })
 }

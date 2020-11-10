@@ -1,46 +1,59 @@
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 
+// Todo: enforce uniqueness
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    authMethod: {
       type: String,
-      unique: true,
-      trim: true,
-      minlength: 5,
+      enum: ['local', 'google'],
       required: true
     },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true
+    local: {
+      username: {
+        type: String,
+        unique: true,
+        trim: true,
+        minlength: 5
+      },
+      email: {
+        type: String,
+        unique: true,
+        trim: true
+      },
+      password: {
+        type: String,
+        minlength: 5
+      }
     },
-    password: {
-      type: String,
-      required: true,
-      minlength: 5
+    google: {
+      id: String,
+      name: String
     }
   },
   { timestamps: true }
 )
 
 userSchema.pre('save', function(next) {
-  if (!this.isModified('password')) {
+  if (this.authMethod !== 'local') {
+    next()
+  }
+
+  if (!this.isModified('local.password')) {
     return next()
   }
 
-  bcrypt.hash(this.password, 8, (err, hash) => {
+  bcrypt.hash(this.local.password, 8, (err, hash) => {
     if (err) {
       return next(err)
     }
-    this.password = hash
+    this.local.password = hash
     next()
   })
 })
 
 userSchema.methods.checkPassword = function(password) {
-  const passwordHash = this.password
+  const passwordHash = this.local.password
   return new Promise((resolve, reject) => {
     bcrypt.compare(password, passwordHash, (err, same) => {
       if (err) {

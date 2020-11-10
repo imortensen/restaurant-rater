@@ -6,19 +6,28 @@ import { model } from 'mongoose'
 
 var users = [
   {
-    username: 'MichaelScott',
-    email: 'bestboss@dundermifflin.com',
-    password: '12345'
+    authMethod: 'local',
+    local: {
+      username: 'MichaelScott',
+      email: 'bestboss@dundermifflin.com',
+      password: '12345'
+    }
   },
   {
-    username: 'DwightSchrute',
-    email: 'dwightschrute@dundermifflin.com',
-    password: '12345'
+    authMethod: 'local',
+    local: {
+      username: 'DwightSchrute',
+      email: 'dwightschrute@dundermifflin.com',
+      password: '12345'
+    }
   },
   {
-    username: 'JimHalpert',
-    email: 'jim.halpert@dundermifflin.com',
-    password: '12345'
+    authMethod: 'local',
+    local: {
+      username: 'JimHalpert',
+      email: 'jim.halpert@dundermifflin.com',
+      password: '12345'
+    }
   }
 ]
 
