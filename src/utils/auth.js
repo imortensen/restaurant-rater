@@ -2,36 +2,6 @@ import config from '../config'
 import jwt from 'jsonwebtoken'
 import { User } from '../resources/user/user.model'
 
-// export const generateUserToken = (req, res) => {
-//   console.log('generate user token test')
-//   const id = req.body
-//   const accessToken = generateAccessToken(id)
-//   res.render('authenticated.html', {
-//     token: accessToken
-//   })
-// }
-
-// // Generate an Access Token for the given User ID
-// function generateAccessToken(userId) {
-//   // How long will the token be valid for
-//   const expiresIn = config.secrets.jwtExp
-//   // Which service issued the token
-//   const issuer = config.secrets.issuer
-//   // Which service is the token intended for
-//   const audience = config.secrets.audience
-//   // The signing key for signing the token
-//   const secret = config.secrets.jwt
-
-//   const token = jwt.sign({}, secret, {
-//     expiresIn: expiresIn,
-//     audience: audience,
-//     issuer: issuer,
-//     subject: userId.toString()
-//   })
-
-//   return token
-// }
-
 // New Token/Sign Token
 export const newToken = user => {
   return jwt.sign(
@@ -39,7 +9,6 @@ export const newToken = user => {
       iss: config.secrets.issuer,
       id: user._id,
       iat: new Date().getTime(),
-      // exp: config.secrets.jwtExp
       exp: new Date().setDate(new Date().getDate() + 1)
     },
     config.secrets.jwt
@@ -65,12 +34,6 @@ export const signup = async (req, res) => {
     console.error(e)
     return res.status(400).end()
   }
-}
-
-// Test
-export const secret = async (req, res, next) => {
-  console.log('I managed to get here!')
-  res.json({ secret: 'resource' })
 }
 
 // Signin

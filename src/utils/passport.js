@@ -10,13 +10,12 @@ const GoogleTokenStrategy = require('passport-google-token').Strategy
 passport.use(
   new JwtStrategy(
     {
-      jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-      // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      // jwtFromRequest: ExtractJwt.fromHeader('authorization'),
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: config.secrets.jwt
     },
     async (payload, done) => {
       try {
-        console.log('jwt strategy')
         const user = await User.findById(payload.id)
 
         if (!user) {
@@ -33,29 +32,24 @@ passport.use(
 
 // Local Strategy
 passport.use(
-  new LocalStrategy(
-    // {
-    //   usernameField: 'username'
-    // },
-    async (username, password, done) => {
-      try {
-        // Find the user given the username
-        const user = await User.findOne({ 'local.username': username })
-        if (!user) {
-          return done(null, false)
-        }
-
-        // Check if the password is correct
-        const matches = await user.checkPassword(password)
-        if (!matches) {
-          return done(null, false)
-        }
-        done(null, user)
-      } catch (err) {
-        done(err, false)
+  new LocalStrategy(async (username, password, done) => {
+    try {
+      // Find the user given the username
+      const user = await User.findOne({ 'local.username': username })
+      if (!user) {
+        return done(null, false)
       }
+
+      // Check if the password is correct
+      const matches = await user.checkPassword(password)
+      if (!matches) {
+        return done(null, false)
+      }
+      done(null, user)
+    } catch (err) {
+      done(err, false)
     }
-  )
+  })
 )
 
 // Google Oauth Strategy
@@ -63,16 +57,11 @@ passport.use(
   'googleToken',
   new GoogleTokenStrategy(
     {
-      clientID:
-        '859271856157-j82hrobufiarmuti4078elhrechovr8n.apps.googleusercontent.com',
-      clientSecret: 'jhMuEX1WOYC1-uBZ3LwEfKXs'
+      clientID: config.googleAuth.clientID,
+      clientSecret: config.googleAuth.clientSecret
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        console.log('accessToken: ' + accessToken)
-        console.log('refresh token: ' + refreshToken)
-        console.log('profile id: ' + profile.id)
-
         // Check whether this current user exists in our database
         const existingUser = await User.findOne({ 'google.id': profile.id })
           .lean()
