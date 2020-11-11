@@ -118,10 +118,11 @@ export const getOne = async (req, res) => {
       const restaurantNew = {
         _id: restaurants[0]._id.restaurant._id,
         name: restaurants[0]._id.restaurant.name,
+        vicinity: restaurants[0]._id.restaurant.vicinity,
+        place_id: restaurants[0]._id.restaurant.place_id,
         stars: restaurants[0].stars.toFixed(1),
         reviews: restaurants[0].reviews
       }
-
       res.status(200).json(restaurantNew)
     }
   } catch (e) {

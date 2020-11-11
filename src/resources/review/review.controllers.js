@@ -6,14 +6,14 @@ export const getMany = async (req, res) => {
     let reviews = {}
     if (!restaurant) {
       reviews = await Review.find()
-        .populate('restaurant', 'name')
-        .populate('createdBy', 'username')
+        .populate('restaurant', ['name', 'vicinity', 'place_id'])
+        .populate('createdBy', ['local.username', 'google.name'])
         .lean()
         .exec()
     } else {
       reviews = await Review.find({ restaurant: restaurant })
-        .populate('restaurant', 'name')
-        .populate('createdBy', 'username')
+        .populate('restaurant', ['name', 'vicinity', 'place_id'])
+        .populate('createdBy', ['local.username', 'google.name'])
         .lean()
         .exec()
     }
@@ -26,7 +26,6 @@ export const getMany = async (req, res) => {
 }
 
 export const createOne = async (req, res) => {
-  console.log('create review controller test')
   const createdBy = req.user._id
   try {
     const review = await Review.create({ ...req.body, createdBy })
@@ -68,8 +67,8 @@ export const getMyreviews = async (req, res) => {
     let reviews = {}
     if (!restaurant) {
       reviews = await Review.find({ createdBy: req.user._id })
-        .populate('restaurant', 'name')
-        .populate('createdBy', 'username')
+        .populate('restaurant', ['name', 'vicinity', 'place_id'])
+        .populate('createdBy', ['local.username', 'google.name'])
         .lean()
         .exec()
     } else {
@@ -77,8 +76,8 @@ export const getMyreviews = async (req, res) => {
         restaurant: restaurant,
         createdBy: req.user._id
       })
-        .populate('restaurant', 'name')
-        .populate('createdBy', 'username')
+        .populate('restaurant', ['name', 'vicinity', 'place_id'])
+        .populate('createdBy', ['local.username', 'google.name'])
         .lean()
         .exec()
     }
