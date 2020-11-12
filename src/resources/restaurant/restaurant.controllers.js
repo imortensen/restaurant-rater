@@ -100,7 +100,6 @@ export const getOne = async (req, res) => {
       },
       {
         $project: {
-          // _id: 0,
           stars: 1,
           reviews: 1
         }
@@ -141,4 +140,9 @@ export const createOne = async (req, res) => {
   }
 }
 
-export const restaurantControllers = { getAll, createOne }
+export const restaurantControllers = {
+  getAll,
+  createOne,
+  getOne,
+  getAllDetailed
+}

@@ -8,9 +8,12 @@ describe('API Authentication:', () => {
   let token
   beforeEach(async () => {
     const user = await User.create({
-      email: 'a@a.com',
-      password: 'hello',
-      username: 'hellokitty'
+      authMethod: 'local',
+      local: {
+        email: 'a@a.com',
+        password: 'hello',
+        username: 'hellokitty'
+      }
     })
     token = newToken(user)
   })

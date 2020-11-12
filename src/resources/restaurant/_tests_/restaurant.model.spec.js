@@ -10,5 +10,18 @@ describe('Restaurant model', () => {
         required: true
       })
     })
+
+    test('place_id', () => {
+      const placeId = Restaurant.schema.obj.place_id
+      expect(placeId).toEqual({
+        type: String,
+        unique: true
+      })
+    })
+
+    test('vicinity', () => {
+      const vicinity = Restaurant.schema.obj.vicinity
+      expect(vicinity).toEqual(String)
+    })
   })
 })

@@ -4,7 +4,9 @@ describe('restaurant router', () => {
   test('has crud routes', () => {
     const routes = [
       { path: '/', method: 'get' },
-      { path: '/', method: 'post' }
+      { path: '/:id', method: 'get' },
+      { path: '/', method: 'post' },
+      { path: '/reviews', method: 'get' }
     ]
 
     routes.forEach(route => {
