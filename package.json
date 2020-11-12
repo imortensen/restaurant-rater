@@ -11,9 +11,9 @@
     "test-models": "yarn test -t model",
     "test-controllers": "yarn test -t controllers",
     "test-auth": "yarn test -t Authentication:",
-    "dev": "nodemon --exec yarn restart",
+    "dev": "nodemon --exec babel-node src/index.js",
     "restart": "rimraf dist && yarn build && yarn start",
-    "start": "nodemon --exec babel-node src/index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "@google/maps": "^1.1.3",
