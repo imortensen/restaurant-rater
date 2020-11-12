@@ -34,13 +34,6 @@ export const getRestaurants = async (req, res) => {
     client
       .placesNearby({
         params: {
-          // fields: [
-          //   'photos',
-          //   'formatted_address',
-          //   'name',
-          //   'opening_hours',
-          //   'rating'
-          // ],
           keyword: keyword,
           location: '40.5982188,-111.8479408',
           radius: 3000,
