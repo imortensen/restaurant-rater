@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "author": "Isaac Mortensen <isaacqmortensen@gmail.com>",
-  "license": "",
+  "license": "MIT",
   "scripts": {
     "build": "babel src --out-dir dist",
     "test": "cross-env NODE_ENV=testing jest --forceExit --detectOpenHandles  --silent",
