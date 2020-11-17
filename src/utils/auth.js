@@ -17,17 +17,21 @@ export const newToken = user => {
 
 // Signup
 export const signup = async (req, res) => {
-  if (
-    !req.body.local.email ||
-    !req.body.local.password ||
-    !req.body.local.username
-  ) {
+  if (!req.body.email || !req.body.password || !req.body.username) {
     return res
       .status(400)
       .send({ message: 'Email, username, and password required' })
   }
   try {
-    const user = await User.create(req.body)
+    const newUser = {
+      authMethod: 'local',
+      local: {
+        email: req.body.email,
+        username: req.body.username,
+        password: req.body.password
+      }
+    }
+    const user = await User.create(newUser)
     const token = newToken(user)
     return res.status(201).send({ token })
   } catch (e) {

@@ -1,6 +1,8 @@
 import { User } from './user.model'
 
 export const me = (req, res) => {
+  // Todo: Fix so that is doesn't return the hashed password
+
   res.status(200).json({ data: req.user })
 }
 
