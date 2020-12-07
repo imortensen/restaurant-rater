@@ -31,6 +31,7 @@ export const signup = async (req, res) => {
         password: req.body.password
       }
     }
+    console.log('new username: ' + newUser.local.username)
     const user = await User.create(newUser)
     const token = newToken(user)
     return res.status(201).send({ token })
