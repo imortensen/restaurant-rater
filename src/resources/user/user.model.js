@@ -12,13 +12,11 @@ const userSchema = new mongoose.Schema(
     local: {
       username: {
         type: String,
-        unique: true,
         trim: true,
         minlength: 5
       },
       email: {
         type: String,
-        unique: true,
         trim: true
       },
       password: {
@@ -32,6 +30,16 @@ const userSchema = new mongoose.Schema(
     }
   },
   { timestamps: true }
+)
+
+userSchema.index(
+  { authMethod: 1, username: 1 },
+  { unique: true, partialFilterExpression: { authMethod: 'local' } }
+)
+
+userSchema.index(
+  { authMethod: 1, email: 1 },
+  { unique: true, partialFilterExpression: { authMethod: 'local' } }
 )
 
 userSchema.pre('save', function(next) {
