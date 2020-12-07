@@ -33,12 +33,12 @@ const userSchema = new mongoose.Schema(
 )
 
 userSchema.index(
-  { authMethod: 1, username: 1 },
+  { authMethod: 1, 'local.username': 1 },
   { unique: true, partialFilterExpression: { authMethod: 'local' } }
 )
 
 userSchema.index(
-  { authMethod: 1, email: 1 },
+  { authMethod: 1, 'local.email': 1 },
   { unique: true, partialFilterExpression: { authMethod: 'local' } }
 )
 
